@@ -7,7 +7,7 @@ import org.junit.Test;
  * The test class TestObtenerHoraMasAccesos.
  *
  * @author  (your name)
- * @version (a version number or a date)
+ * @version (a version number or a date
  */
 public class TestRama0543aCommit01
 {

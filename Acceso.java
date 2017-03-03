@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Acceso
 {
     private int ano;
@@ -5,14 +6,19 @@ public class Acceso
     private int dia;
     private int hora;
     private int minutos;
+    private String[] accesos;
+    private Scanner sc;
     
-    public Acceso(int ano, int mes, int dia, int hora, int minutos)
+    public Acceso(String lineaAcceso)
     {
-        this.ano = ano;
-        this.mes = mes;
-        this.dia = dia;
-        this.hora = hora;
-        this.minutos = minutos;
+        sc = new Scanner(lineaAcceso);
+        String lineaLeida = sc.nextLine();               
+        accesos = lineaLeida.split(" ");
+        ano = Integer.parseInt(accesos[0]);
+        mes = Integer.parseInt(accesos[1]);
+        dia = Integer.parseInt(accesos[2]);
+        hora = Integer.parseInt(accesos[3]);
+        minutos = Integer.parseInt(accesos[4]);
     }
     
     public int getAno() 
