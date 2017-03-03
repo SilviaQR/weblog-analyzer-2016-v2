@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Acceso
 {
     private int ano;
@@ -5,14 +6,29 @@ public class Acceso
     private int dia;
     private int hora;
     private int minutos;
+    private Scanner sc;
+    private String direccionIp;
+    private String paginaWeb;
+    private int codigoHttp;
     
-    public Acceso(int ano, int mes, int dia, int hora, int minutos)
+    public Acceso(String lineaAcceso)
     {
-        this.ano = ano;
-        this.mes = mes;
-        this.dia = dia;
-        this.hora = hora;
-        this.minutos = minutos;
+        sc = new Scanner(lineaAcceso);
+        String lineaLeida = sc.nextLine();               
+        String[] accesos = lineaLeida.split(" ");
+        direccionIp = accesos[0];
+        ano = Integer.parseInt(accesos[1].substring(1,5));
+        mes = Integer.parseInt(accesos[2]);
+        dia = Integer.parseInt(accesos[3]);
+        hora = Integer.parseInt(accesos[4]);
+        minutos = Integer.parseInt(accesos[5].substring(0,2));
+        paginaWeb = accesos[6];
+        codigoHttp = Integer.parseInt(accesos[7]);
+    }
+    
+    public String getDireccionIp()
+    {
+        return direccionIp;
     }
     
     public int getAno() 
@@ -38,5 +54,15 @@ public class Acceso
     public int getMinutos()
     {
         return minutos;
+    }
+    
+    public String getPaginaWeb()
+    {
+        return paginaWeb;
+    }
+    
+    public int getCodigoHttp()
+    {
+        return codigoHttp;
     }
 }
