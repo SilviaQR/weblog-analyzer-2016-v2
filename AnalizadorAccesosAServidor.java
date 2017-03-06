@@ -1,14 +1,17 @@
 import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AnalizadorAccesosAServidor
 {
     private ArrayList<Acceso> accesos;
+    private HashMap<String, Integer> paginasWeb;
 
     public AnalizadorAccesosAServidor() 
     {
         accesos = new ArrayList<>();
+        paginasWeb = new HashMap<>();
     }
 
     public void analizarArchivoDeLog(String archivo)
@@ -56,11 +59,28 @@ public class AnalizadorAccesosAServidor
         return valorADevolver;
     }
 
-    
     public String paginaWebMasSolicitada() 
     {
-        return "";
+        paginasWeb.clear();
+        String textoAMostrar = null;
+        int posicionPagina = -1;
+        for(Acceso accesoActual : accesos){
+            if(!paginasWeb.containsKey(accesoActual.getPaginaWeb())){
+                paginasWeb.put(accesoActual.getPaginaWeb(), 0);
+            }
+        }
+        for(Acceso nuevoAcceso : accesos){
+            paginasWeb.put(nuevoAcceso.getPaginaWeb(), paginasWeb.get(nuevoAcceso.getPaginaWeb()) + 1);
+        }
+        for(String paginaBuscada : paginasWeb.keySet()){
+            if(paginaBuscada != null && paginasWeb.get(paginaBuscada) > posicionPagina){
+                posicionPagina = paginasWeb.get(paginaBuscada);
+                textoAMostrar = paginaBuscada;
+            }
+        }
+        return textoAMostrar;
     }
+
 
     public String clienteConMasAccesosExitosos()
     {
