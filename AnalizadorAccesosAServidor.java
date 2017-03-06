@@ -7,11 +7,13 @@ public class AnalizadorAccesosAServidor
 {
     private ArrayList<Acceso> accesos;
     private HashMap<String, Integer> paginasWeb;
+    private HashMap<String, Integer> direccionesIp;
 
     public AnalizadorAccesosAServidor() 
     {
         accesos = new ArrayList<>();
         paginasWeb = new HashMap<>();
+        direccionesIp = new HashMap<>();
     }
 
     public void analizarArchivoDeLog(String archivo)
@@ -78,13 +80,29 @@ public class AnalizadorAccesosAServidor
                 textoAMostrar = paginaBuscada;
             }
         }
+        
         return textoAMostrar;
     }
 
-
     public String clienteConMasAccesosExitosos()
     {
-        return "";
+        direccionesIp.clear();
+        String direccionAMostrar = null;
+        int posicionDireccion = -1;
+        for(Acceso accesoActual : accesos){
+            if(!direccionesIp.containsKey(accesoActual.getDireccionIp())){
+                direccionesIp.put(accesoActual.getDireccionIp(), 0);
+            }
+        }
+        for(Acceso nuevoAcceso : accesos){
+            direccionesIp.put(nuevoAcceso.getDireccionIp(),  direccionesIp.get(nuevoAcceso.getDireccionIp()) + 1);
+        }
+        for(String direccionBuscada : direccionesIp.keySet()){
+            if(direccionBuscada != null && direccionesIp.get(direccionBuscada) > posicionDireccion){
+                posicionDireccion = direccionesIp.get(direccionBuscada);
+                direccionAMostrar = direccionBuscada;
+            }
+        }
+        return direccionAMostrar;
     }
-
 }
